@@ -2,16 +2,16 @@ version: '3.8'
 
 services:
     web:
-        image: nginx:latest
+        image: garyclarke/pap-web
         ports:
-            - "8080:80"
+            - "8080:80"  # Maps port 8080 on the host to port 80 in the container
         volumes:
-            - ./public:/usr/share/nginx/html
-            - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
-        depends_on:
-            - php
-
-    php:
-        image: php:latest-fpm
+            - ./public:/var/www/html/public
+    app:
+        image: garyclarke/pap-app
+        environment:
+            MARIADB_HOST: db
         volumes:
-            - ./public:/var/www/html
+            - .:/var/www/html
+        extra_hosts:
+            - host.docker.internal:host-gateway
