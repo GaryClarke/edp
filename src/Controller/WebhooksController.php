@@ -18,11 +18,15 @@ class WebhooksController extends AbstractController
     ) {
     }
 
-    #[Route(path: '/webhooks', name: 'webhooks', methods: ['POST'])]
+    #[Route(path: '/webhook', name: 'webhook', methods: ['POST'])]
     public function __invoke(Request $request): Response
     {
         $webhook = $this->serializer->deserialize($request->getContent(), Webhook::class, 'json');
 
         dd($webhook);
+
+        // Do something here...
+
+        return new Response(status: 204);
     }
 }
