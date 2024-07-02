@@ -8,6 +8,7 @@ class Webhook
 {
     private string $event;
 
+    /** @var array<string, mixed> */
     private array $data;
 
     public function getEvent(): string
@@ -20,11 +21,17 @@ class Webhook
         $this->event = $event;
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function getData(): array
     {
         return $this->data;
     }
 
+    /**
+     * @param array<string, mixed> $data
+     */
     public function setData(array $data): void
     {
         $this->data = $data;

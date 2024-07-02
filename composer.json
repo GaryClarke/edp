@@ -62,7 +62,7 @@
         "post-update-cmd": [
             "@auto-scripts"
         ],
-        "run-tests": "composer run-phpunit && composer run-phpcs && composer run-phpmd && composer run-phplint",
+        "run-tests": "composer run-phpunit && composer run-phpstan && composer run-phpcs && composer run-phplint",
         "run-phpstan": "vendor/bin/phpstan analyse",
         "run-phpcs": "vendor/bin/phpcs",
         "run-phplint": "vendor/bin/phplint",

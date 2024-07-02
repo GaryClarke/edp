@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Symfony\Component\HttpFoundation\Response;
 
 class WebhooksControllerTest extends WebTestCase
 {
@@ -28,5 +29,7 @@ class WebhooksControllerTest extends WebTestCase
             ],
             content: $webhook
         );
+
+        $this->assertEquals(Response::HTTP_NO_CONTENT, $webTester->getResponse()->getStatusCode());
     }
 }

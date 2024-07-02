@@ -23,7 +23,7 @@ class WebhooksController extends AbstractController
     {
         $webhook = $this->serializer->deserialize($request->getContent(), Webhook::class, 'json');
 
-        dd($webhook);
+
 
         // Do something here...
 
