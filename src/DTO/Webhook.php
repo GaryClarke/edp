@@ -6,19 +6,19 @@ namespace App\DTO;
 
 class Webhook
 {
-    private string $event;
+    private string $name;
 
     /** @var array<string, mixed> */
     private array $data;
 
-    public function getEvent(): string
+    public function getName(): string
     {
-        return $this->event;
+        return $this->name;
     }
 
-    public function setEvent(string $event): void
+    public function setName(string $name): void
     {
-        $this->event = $event;
+        $this->name = $name;
     }
 
     /**
