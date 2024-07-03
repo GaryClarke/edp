@@ -8,13 +8,19 @@ use App\DTO\Webhook;
 
 class AppSubscriptionHandler implements WebhookHandlerInterface
 {
+    private const SUPPORTED_EVENTS = [
+        'app_subscription_started',
+        'app_subscription_stopped',
+        'app_subscription_changed'
+    ];
+
     public function supports(Webhook $webhook): bool
     {
-        // TODO: Implement supports() method.
+        return in_array($webhook->getEvent(), self::SUPPORTED_EVENTS);
     }
 
-    public function handler(Webhook $webhook)
+    public function handle(Webhook $webhook): void
     {
-        // TODO: Implement handler() method.
+        dd($webhook);
     }
 }

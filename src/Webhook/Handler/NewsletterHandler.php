@@ -15,8 +15,8 @@ class NewsletterHandler implements WebhookHandlerInterface
         return in_array($webhook->getEvent(), self::SUPPORTED_EVENTS);
     }
 
-    public function handler(Webhook $webhook)
+    public function handle(Webhook $webhook): void
     {
-        // TODO: Implement handler() method.
+        dd($webhook);
     }
 }
