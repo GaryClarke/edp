@@ -8,7 +8,7 @@ use App\DTO\Webhook;
 
 class AppSubscriptionHandler implements WebhookHandlerInterface
 {
-    public function supports(Webhook $webhook)
+    public function supports(Webhook $webhook): bool
     {
         // TODO: Implement supports() method.
     }
