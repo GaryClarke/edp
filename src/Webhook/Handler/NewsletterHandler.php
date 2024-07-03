@@ -8,9 +8,11 @@ use App\DTO\Webhook;
 
 class NewsletterHandler implements WebhookHandlerInterface
 {
+    private const array SUPPORTED_EVENTS = ['newsletter_opened', 'newsletter_subscribed', 'newsletter_unsubscribed'];
+
     public function supports(Webhook $webhook): bool
     {
-        return $webhook->getName() === 'newsletter_notification';
+        return in_array($webhook->getEvent(), self::SUPPORTED_EVENTS);
     }
 
     public function handler(Webhook $webhook)

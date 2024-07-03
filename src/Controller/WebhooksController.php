@@ -22,10 +22,9 @@ class WebhooksController extends AbstractController
     public function __invoke(Request $request): Response
     {
         $webhook = $this->serializer->deserialize($request->getContent(), Webhook::class, 'json');
+        $webhook->setRawPayload($request->getContent());
 
         dd($webhook);
-
-
 
         // Do something here...
 

@@ -13,7 +13,7 @@ class WebhooksControllerTest extends WebTestCase
     {
         $webTester = static::createClient();
 
-        $webhook = '{"name":"newsletter_notification","data":{"event":"opened"}}';
+        $webhook = '{"event": "newsletter_opened","timestamp": "2023-07-03T12:00:00Z","user": {"client_id":"some-user-guid","email": "user@example.com","region": "UK"},"newsletter": {"newsletter_id":"newsletter-001","topic": "Summer Sales","product_id": "some-product-identifier"}}';
 
         $webTester->request(
             method: 'POST',
