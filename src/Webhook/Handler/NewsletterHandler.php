@@ -18,7 +18,7 @@ class NewsletterHandler implements WebhookHandlerInterface
 
     public function handle(Webhook $webhook): void
     {
-        $newsletterDto = $this->newsletterDtoFactory->createFromWebhook($webhook);
+//        $newsletterDto = $this->newsletterDtoFactory->createFromWebhook($webhook);
 
         // Loop over the forwarders
             // If supported

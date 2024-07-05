@@ -22,7 +22,7 @@ class WebhooksControllerTest extends WebTestCase
 
     public function testWebhooksAreHandled(): void
     {
-        $webhook = '{"event": "newsletter_subscribed","timestamp": "2023-07-03T12:00:00Z","user": {"client_id":"some-user-guid","email": "user@example.com","region": "UK"},"newsletter": {"newsletter_id":"newsletter-001","topic": "Summer Sales","product_id":"some-product-identifier"}}';
+        $webhook = '{"event":"newsletter_subscribed","id":"12345","origin":"www","timestamp":"2024-12-12T12:00:00Z","user": {"client_id":"some-user-guid","email":"user@example.com","region":"UK"},"newsletter": {"newsletter_id":"newsletter-001","topic":"N/A","product_id":"some-product-identifier"}}';
 
         $this->postJson($webhook);
 
