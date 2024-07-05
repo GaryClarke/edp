@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Webhook\Handler;
 
+use App\DTO\Newsletter\NewsletterDto;
 use App\DTO\Webhook;
 
 class NewsletterHandler implements WebhookHandlerInterface
@@ -18,5 +19,9 @@ class NewsletterHandler implements WebhookHandlerInterface
     public function handle(Webhook $webhook): void
     {
         $newsletterDto = $this->newsletterDtoFactory->createFromWebhook($webhook);
+
+        // Loop over the forwarders
+            // If supported
+            // Forward the data
     }
 }
