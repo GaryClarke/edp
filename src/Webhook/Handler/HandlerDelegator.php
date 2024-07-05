@@ -10,7 +10,7 @@ use Symfony\Component\DependencyInjection\Attribute\AutowireIterator;
 class HandlerDelegator
 {
     /**
-     * @param WebhookHandlerInterface ...$handlers
+     * @param iterable<WebhookHandlerInterface> $handlers
      */
     public function __construct(
         #[AutowireIterator('webhook.handler.delegate')] private iterable $handlers
