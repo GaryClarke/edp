@@ -6,7 +6,7 @@ use App\DTO\Newsletter\NewsletterWebhook;
 
 interface ForwarderInterface
 {
-    public function supports(NewsletterWebhook $newsletterDto): bool;
+    public function supports(NewsletterWebhook $newsletterWebhook): bool;
 
-    public function forward(NewsletterWebhook $newsletterDto): void;
+    public function forward(NewsletterWebhook $newsletterWebhook): void;
 }

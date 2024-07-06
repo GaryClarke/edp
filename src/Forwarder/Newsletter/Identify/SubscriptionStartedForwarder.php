@@ -9,13 +9,16 @@ use App\Forwarder\Newsletter\ForwarderInterface;
 
 class SubscriptionStartedForwarder implements ForwarderInterface
 {
-    public function supports(NewsletterWebhook $newsletterDto): bool
+    private const string SUPPORTED_EVENT = 'newsletter_subscribed';
+
+    public function supports(NewsletterWebhook $newsletterWebhook): bool
     {
-        return true;
+        return $newsletterWebhook->getEvent() === self::SUPPORTED_EVENT;
     }
 
-    public function forward(NewsletterWebhook $newsletterDto): void
+    public function forward(NewsletterWebhook $newsletterWebhook): void
     {
+        dd($newsletterWebhook);
         // Instantiate a class which models Identify data
 
         // Map the NewsletterWebhook data to the model
