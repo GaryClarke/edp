@@ -4,21 +4,21 @@ declare(strict_types=1);
 
 namespace App\Forwarder\Newsletter\Identify;
 
-use App\DTO\Newsletter\NewsletterDto;
+use App\DTO\Newsletter\NewsletterWebhook;
 use App\Forwarder\Newsletter\ForwarderInterface;
 
 class SubscriptionStartedForwarder implements ForwarderInterface
 {
-    public function supports(NewsletterDto $newsletterDto): bool
+    public function supports(NewsletterWebhook $newsletterDto): bool
     {
         return true;
     }
 
-    public function forward(NewsletterDto $newsletterDto): void
+    public function forward(NewsletterWebhook $newsletterDto): void
     {
         // Instantiate a class which models Identify data
 
-        // Map the NewsletterDto data to the model
+        // Map the NewsletterWebhook data to the model
 
         // Validate the model
 
