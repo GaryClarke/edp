@@ -6,7 +6,9 @@ namespace App\DTO\Newsletter\Factory;
 
 use App\DTO\Newsletter\NewsletterWebhook;
 use App\DTO\Webhook;
+use App\Error\Exception\WebhookException;
 use Symfony\Component\Serializer\SerializerInterface;
+use Throwable;
 
 class NewsletterWebhookFactory
 {
@@ -17,12 +19,16 @@ class NewsletterWebhookFactory
 
     public function createFromWebhook(Webhook $webhook): NewsletterWebhook
     {
-        $newsletterWebhook = $this->serializer->deserialize(
-            $webhook->getRawPayload(),
-            NewsletterWebhook::class,
-            'json'
-        );
+        try {
+            $newsletterWebhook = $this->serializer->deserialize(
+                $webhook->getRawPayload(),
+                NewsletterWebhook::class,
+                'json'
+            );
 
-        return $newsletterWebhook;
+            return $newsletterWebhook;
+        } catch (Throwable $throwable) {
+            throw new WebhookException('Unable to create NewsletterWebhook because ' . $throwable->getMessage());
+        }
     }
 }

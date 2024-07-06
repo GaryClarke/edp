@@ -12,7 +12,7 @@ class NewsletterHandler implements WebhookHandlerInterface
     private const SUPPORTED_EVENTS = ['newsletter_opened', 'newsletter_subscribed', 'newsletter_unsubscribed'];
 
     public function __construct(
-        private NewsletterWebhookFactory $newsletterDtoFactory
+        private NewsletterWebhookFactory $newsletterWebhookFactory
     ) {
     }
 
@@ -23,7 +23,7 @@ class NewsletterHandler implements WebhookHandlerInterface
 
     public function handle(Webhook $webhook): void
     {
-        $newsletterDto = $this->newsletterDtoFactory->createFromWebhook($webhook);
+        $newsletterWebhook = $this->newsletterWebhookFactory->createFromWebhook($webhook);
 
         // Loop over the forwarders
             // If supported
