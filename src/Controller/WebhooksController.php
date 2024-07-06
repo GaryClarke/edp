@@ -26,14 +26,13 @@ class WebhooksController extends AbstractController
     #[Route(path: '/webhook', name: 'webhook', methods: ['POST'])]
     public function __invoke(Request $request): Response
     {
-        $webhook = $this->serializer->deserialize($request->getContent(), Webhook::class, 'json');
-        $webhook->setRawPayload($request->getContent());
-
         try {
+            $webhook = $this->serializer->deserialize($request->getContent(), Webhook::class, 'json');
+            $webhook->setRawPayload($request->getContent());
             $this->handlerDelegator->delegate($webhook);
         } catch (Throwable $throwable) {
             // How do we test that errors are caught and handled here?
-            $this->errorHandler->handle($throwable, $webhook);
+            $this->errorHandler->handle($throwable);
             return new Response(status: 400);
         }
 

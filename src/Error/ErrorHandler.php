@@ -9,7 +9,7 @@ use Throwable;
 
 class ErrorHandler
 {
-    public function handle(Throwable $error, Webhook $webhook): void
+    public function handle(Throwable $error): void
     {
         // Log to centralized logging platform e.g. DataDog
     }
