@@ -76,4 +76,24 @@ class NewsletterWebhook implements SubscriptionSourceInterface
     {
         $this->newsletter = $newsletter;
     }
+
+    public function getProduct(): string
+    {
+        return $this->newsletter->getProductId();
+    }
+
+    public function getEventDate(): string
+    {
+        return $this->timestamp->format('Y-m-d');
+    }
+
+    public function getSubscriptionId(): string
+    {
+        return $this->id;
+    }
+
+    public function getEmail(): string
+    {
+        return $this->user->getEmail();
+    }
 }
