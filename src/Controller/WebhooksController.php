@@ -32,7 +32,9 @@ class WebhooksController extends AbstractController
         try {
             $this->handlerDelegator->delegate($webhook);
         } catch (Throwable $throwable) {
-            $this->errorHandler->handle($throwable, $webhook); // How do we test that errors are caught and handled here?
+            // How do we test that errors are caught and handled here?
+            $this->errorHandler->handle($throwable, $webhook);
+            return new Response(status: 400);
         }
 
         return new Response(status: 204);
