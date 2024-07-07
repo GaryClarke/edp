@@ -26,12 +26,12 @@ class WebhooksControllerTest extends WebTestCase
 
         $this->postJson($webhook);
 
-        // Assert CdpClient::track() called once
-        // Assert correct TrackModel is passed to CdpClient::track() method
-        // Assert TrackModel::toArray() organizes data into format expected by CDP
         // Assert CdpClient::identify() called once
         // Assert correct IdentifyModel is passed to CdpClient::identify() method
         // Assert IdentifyModel::toArray() organizes data into format expected by CDP
+        // Assert CdpClient::track() called once
+        // Assert correct TrackModel is passed to CdpClient::track() method
+        // Assert TrackModel::toArray() organizes data into format expected by CDP
 
         $this->assertEquals(Response::HTTP_NO_CONTENT, $this->webTester->getResponse()->getStatusCode());
     }
