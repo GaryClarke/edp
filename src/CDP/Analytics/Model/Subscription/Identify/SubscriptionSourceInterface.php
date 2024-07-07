@@ -14,5 +14,5 @@ interface SubscriptionSourceInterface
 
     public function getEmail(): string;
 
-    public function getId(): string;
+    public function getUserId(): string;
 }

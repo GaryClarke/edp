@@ -96,4 +96,9 @@ class NewsletterWebhook implements SubscriptionSourceInterface
     {
         return $this->user->getEmail();
     }
+
+    public function getUserId(): string
+    {
+        return $this->user->getClientId();
+    }
 }

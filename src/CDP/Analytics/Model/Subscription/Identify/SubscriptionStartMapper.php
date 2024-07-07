@@ -16,7 +16,7 @@ class SubscriptionStartMapper
             $target->setEventDate($source->getEventDate());
             $target->setSubscriptionId($source->getSubscriptionId());
             $target->setEmail($source->getEmail());
-            $target->setId($source->getId());
+            $target->setId($source->getUserId());
         } catch (TypeError $error) {
             $className = get_class($source);
             throw new WebhookException("Could not map $className to IdentifyModel target");
