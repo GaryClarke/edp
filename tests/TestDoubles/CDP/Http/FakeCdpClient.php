@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace TestDoubles\CDP\Http;
+namespace App\Tests\TestDoubles\CDP\Http;
 
 use App\CDP\Analytics\Model\ModelInterface;
 use App\CDP\Http\CdpClient;

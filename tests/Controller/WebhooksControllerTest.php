@@ -2,8 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Controller;
+namespace App\Tests\Controller;
 
+use App\CDP\Http\CdpClient;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -13,11 +14,13 @@ class WebhooksControllerTest extends WebTestCase
 {
     private KernelBrowser $webTester;
     private ContainerInterface $container;
+    private CdpClient $cdpClient;
 
     protected function setUp(): void
     {
         $this->webTester = static::createClient();
         $this->container = $this->webTester->getContainer();
+        $this->cdpClient = $this->container->get(CdpClient::class);
     }
 
     public function testWebhooksAreHandled(): void
