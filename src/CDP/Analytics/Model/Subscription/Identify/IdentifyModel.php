@@ -5,17 +5,28 @@ declare(strict_types=1);
 namespace App\CDP\Analytics\Model\Subscription\Identify;
 
 use App\CDP\Analytics\Model\ModelInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 class IdentifyModel implements ModelInterface
 {
+    #[Assert\NotBlank]
     private string $product;
 
+    #[Assert\NotBlank]
+    #[Assert\Regex(
+        pattern: '/^\d{4}-\d{2}-\d{2}$/',
+        message: 'The event date must be in the format YYYY-MM-DD.'
+    )]
     private string $eventDate;
 
+    #[Assert\NotBlank]
     private string $subscriptionId;
 
+    #[Assert\Email]
+    #[Assert\NotBlank]
     private string $email;
 
+    #[Assert\NotBlank]
     private string $id;
 
     public function setProduct(string $product): void
