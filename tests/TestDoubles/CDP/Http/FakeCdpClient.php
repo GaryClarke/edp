@@ -13,6 +13,10 @@ class FakeCdpClient extends CdpClient
 
     private ModelInterface $identifyModel;
 
+    private int $trackCallCount = 0;
+
+    private ModelInterface $trackModel;
+
     public function identify(ModelInterface $model): void
     {
         // Increment an identify call count
@@ -40,5 +44,22 @@ class FakeCdpClient extends CdpClient
     public function setIdentifyModel(ModelInterface $identifyModel): void
     {
         $this->identifyModel = $identifyModel;
+    }
+
+    public function track(ModelInterface $model): void
+    {
+        $this->trackCallCount++;
+
+        $this->identifyModel = $model;
+    }
+
+    public function getTrackCallCount(): int
+    {
+        return $this->trackCallCount;
+    }
+
+    public function getTrackModel(): ModelInterface
+    {
+        return $this->trackModel;
     }
 }

@@ -34,7 +34,7 @@ class WebhooksControllerTest extends WebTestCase
         // Assert CdpClient::identify() called once
         $this->assertEquals(1, $this->cdpClient->getIdentifyCallCount());
         // Assert correct IdentifyModel is passed to CdpClient::identify() method
-        $identifyModel = $this->cdpClient->getIdentifyModel();
+        $identifyModel = $this->cdpClient->getIdentifyModel(); // < do I actually need this?
         assert($identifyModel instanceof IdentifyModel);
 
         // Assert IdentifyModel::toArray() organizes data into format expected by CDP
@@ -52,8 +52,33 @@ class WebhooksControllerTest extends WebTestCase
         ], $identifyModel->toArray());
 
         // Assert CdpClient::track() called once
+        $this->assertEquals(1, $this->cdpClient->getTrackCallCount());
         // Assert correct TrackModel is passed to CdpClient::track() method
+        $trackModel = $this->cdpClient->getTrackModel();
         // Assert TrackModel::toArray() organizes data into format expected by CDP
+        $this->assertSame([
+            'type' => 'track',
+            'event' => 'newsletter_subscribed', // event
+            'context' => [
+                'product' => 'some-product-identifier', // newsletter.product_id
+                'event_date' => '2024-12-12', // timestamp
+                'traits' => [
+                    'subscription_id' => '12345', // id
+                    'email' => 'user@example.com', // user.email
+                ],
+            ],
+            'properties' => [
+                'requires_consent' => true, // from user.region
+                'platform' => 'web', // origin
+                'product_name' => 'newsletter-001', // newsletter.newsletter_id
+                'renewal_date' => '2025-12-12', // start date + 1 year if not provided
+                'start_date' => '2024-12-12', // timestamp
+                'status' => 'subscribed', // set by api
+                'type' => 'newsletter', // set by api
+                'is_promotion' => false, // use default
+            ],
+            'id' => 'some-user-guid' // user.client_id
+        ], $trackModel->toArray());
 
         $this->assertEquals(Response::HTTP_NO_CONTENT, $this->webTester->getResponse()->getStatusCode());
     }
