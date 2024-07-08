@@ -7,7 +7,7 @@ namespace App\Error;
 use App\DTO\Webhook;
 use Throwable;
 
-class ErrorHandler
+class ErrorHandler implements ErrorHandlerInterface
 {
     public function handle(Throwable $error): void
     {
