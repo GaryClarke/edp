@@ -4,8 +4,9 @@ declare(strict_types=1);
 
 namespace App\DTO\Newsletter;
 
-use App\CDP\Analytics\Model\Subscription\Identify\SubscriptionSourceInterface;
+use App\CDP\Analytics\Model\Subscription\SubscriptionSourceInterface;
 use App\DTO\User\User;
+use DateInterval;
 use DateTimeInterface;
 
 class NewsletterWebhook implements SubscriptionSourceInterface
@@ -77,6 +78,8 @@ class NewsletterWebhook implements SubscriptionSourceInterface
         $this->newsletter = $newsletter;
     }
 
+    // SubscriptionSourceInterface methods
+
     public function getProduct(): string
     {
         return $this->newsletter->getProductId();
@@ -100,5 +103,44 @@ class NewsletterWebhook implements SubscriptionSourceInterface
     public function getUserId(): string
     {
         return $this->user->getClientId();
+    }
+
+    public function requiresConsent(): bool
+    {
+        return $this->user->getRegion() === 'EU';
+    }
+
+    public function getPlatform(): string
+    {
+        return $this->origin;
+    }
+
+    public function getProductName(): string
+    {
+        return $this->newsletter->getNewsletterId();
+    }
+
+    public function getRenewalDate(): string
+    {
+        $date = $this->timestamp;
+
+        $interval = new DateInterval('P1Y');
+
+        return $date->add($interval)->format('Y-m-d');
+    }
+
+    public function getStartDate(): string
+    {
+        return $this->timestamp->format('Y-m-d');
+    }
+
+    public function getType(): string
+    {
+        return 'newsletter';
+    }
+
+    public function isPromotion(): bool
+    {
+        return false;
     }
 }

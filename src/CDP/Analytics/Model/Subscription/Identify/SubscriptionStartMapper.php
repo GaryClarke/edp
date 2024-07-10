@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\CDP\Analytics\Model\Subscription\Identify;
 
+use App\CDP\Analytics\Model\Subscription\SubscriptionSourceInterface;
 use App\Error\Exception\WebhookException;
 use TypeError;
 
@@ -19,7 +20,7 @@ class SubscriptionStartMapper
             $target->setId($source->getUserId());
         } catch (TypeError $error) {
             $className = get_class($source);
-            throw new WebhookException("Could not map $className to IdentifyModel target");
+            throw new WebhookException("Could not map $className to IdentifyModel target because: " . $error->getMessage());
         }
     }
 }
