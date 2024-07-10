@@ -6,11 +6,17 @@ namespace App\Forwarder\Newsletter\Track;
 
 use App\CDP\Analytics\Model\Subscription\Track\SubscriptionMapper;
 use App\CDP\Analytics\Model\Subscription\Track\TrackModel;
+use App\CDP\Http\CdpClient;
 use App\DTO\Newsletter\NewsletterWebhook;
 use App\Forwarder\Newsletter\ForwarderInterface;
 
 class SubscriptionForwarder implements ForwarderInterface
 {
+    public function __construct(
+        private CdpClient $cdpClient
+    ) {
+    }
+
     public function supports(NewsletterWebhook $newsletterWebhook): bool
     {
         return true; // track user action for all events
@@ -29,6 +35,6 @@ class SubscriptionForwarder implements ForwarderInterface
 //        $this->modelValidator->validate($model);
 
         // Use the CDP client to POST the data to the CDP
-//        $this->cdpClient->identify($model);
+        $this->cdpClient->track($model);
     }
 }

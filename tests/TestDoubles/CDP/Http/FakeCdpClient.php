@@ -50,7 +50,7 @@ class FakeCdpClient extends CdpClient
     {
         $this->trackCallCount++;
 
-        $this->identifyModel = $model;
+        $this->trackModel = $model;
     }
 
     public function getTrackCallCount(): int

@@ -112,7 +112,8 @@ class NewsletterWebhook implements SubscriptionSourceInterface
 
     public function getPlatform(): string
     {
-        return $this->origin;
+//        return $this->origin;
+        return 'web';
     }
 
     public function getProductName(): string
