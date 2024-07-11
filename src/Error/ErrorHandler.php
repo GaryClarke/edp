@@ -12,5 +12,6 @@ class ErrorHandler implements ErrorHandlerInterface
     public function handle(Throwable $error): void
     {
         // Log to centralized logging platform e.g. DataDog
+        throw $error;
     }
 }

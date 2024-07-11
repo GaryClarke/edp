@@ -63,7 +63,6 @@ class TrackModel implements ModelInterface
     #[Assert\NotBlank]
     private string $type = 'newsletter';
 
-    #[Assert\NotBlank]
     private bool $isPromotion = false;
 
     #[Assert\NotBlank]

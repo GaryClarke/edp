@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Forwarder\Newsletter\Track;
 
+use App\CDP\Analytics\Model\ModelValidator;
 use App\CDP\Analytics\Model\Subscription\Track\SubscriptionMapper;
 use App\CDP\Analytics\Model\Subscription\Track\TrackModel;
 use App\CDP\Http\CdpClient;
@@ -13,7 +14,8 @@ use App\Forwarder\Newsletter\ForwarderInterface;
 class SubscriptionForwarder implements ForwarderInterface
 {
     public function __construct(
-        private CdpClient $cdpClient
+        private CdpClient $cdpClient,
+        private ModelValidator $modelValidator
     ) {
     }
 
@@ -32,7 +34,7 @@ class SubscriptionForwarder implements ForwarderInterface
         (new SubscriptionMapper())->map($newsletterWebhook, $model);
 
         // Validate the model
-//        $this->modelValidator->validate($model);
+        $this->modelValidator->validate($model);
 
         // Use the CDP client to POST the data to the CDP
         $this->cdpClient->track($model);
