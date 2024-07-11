@@ -38,7 +38,6 @@ class NewsletterHandler implements WebhookHandlerInterface
                 // Forward the data
                 $forwarder->forward($newsletterWebhook);
             }
-
         }
     }
 }

@@ -7,6 +7,7 @@ namespace App\DTO\Newsletter;
 use App\CDP\Analytics\Model\Subscription\SubscriptionSourceInterface;
 use App\DTO\User\User;
 use DateInterval;
+use DateTimeImmutable;
 use DateTimeInterface;
 
 class NewsletterWebhook implements SubscriptionSourceInterface
@@ -14,7 +15,7 @@ class NewsletterWebhook implements SubscriptionSourceInterface
     private string $event;
     private string $id;
     private string $origin;
-    private DateTimeInterface $timestamp;
+    private DateTimeImmutable $timestamp;
     private User $user;
     private Newsletter $newsletter;
 
@@ -48,12 +49,12 @@ class NewsletterWebhook implements SubscriptionSourceInterface
         $this->origin = $origin;
     }
 
-    public function getTimestamp(): DateTimeInterface
+    public function getTimestamp(): DateTimeImmutable
     {
         return $this->timestamp;
     }
 
-    public function setTimestamp(DateTimeInterface $timestamp): void
+    public function setTimestamp(DateTimeImmutable $timestamp): void
     {
         $this->timestamp = $timestamp;
     }

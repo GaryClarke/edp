@@ -27,7 +27,9 @@ class WebhooksControllerTest extends WebTestCase
 
     public function testWebhooksAreHandled(): void
     {
+        /** @phpcs:disable */
         $webhook = '{"event":"newsletter_subscribed","id":"12345","origin":"www","timestamp":"2024-12-12T12:00:00Z","user": {"client_id":"some-user-guid","email":"user@example.com","region":"EU"},"newsletter": {"newsletter_id":"newsletter-001","topic":"N/A","product_id":"some-product-identifier"}}';
+        /** @phpcs:enable */
 
         $this->postJson($webhook);
 

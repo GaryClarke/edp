@@ -20,7 +20,9 @@ class SubscriptionStartMapper
             $target->setId($source->getUserId());
         } catch (TypeError $error) {
             $className = get_class($source);
-            throw new WebhookException("Could not map $className to IdentifyModel target because: " . $error->getMessage());
+            throw new WebhookException(
+                "Could not map $className to IdentifyModel target because: " . $error->getMessage()
+            );
         }
     }
 }
