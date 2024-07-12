@@ -85,6 +85,26 @@ class WebhooksControllerTest extends WebTestCase
         $this->assertEquals(Response::HTTP_NO_CONTENT, $this->webTester->getResponse()->getStatusCode());
     }
 
+    public function testWebhookExceptionThrownIfWebhookCanNotBeHandled(): void
+    {
+        $this->markTestIncomplete('wip');
+    }
+
+    public function testWebhookExceptionThrownIfDeserializeFails(): void
+    {
+        $this->markTestIncomplete('wip');
+    }
+
+    public function testWebhookExceptionThrownIfIdentifyModelMappingFails(): void
+    {
+        $this->markTestIncomplete('wip');
+    }
+
+    public function testWebhookExceptionThrownIfIdentifyModelValidationFails(): void
+    {
+        $this->markTestIncomplete('wip');
+    }
+
     private function postJson(string $payload): void
     {
         $this->webTester->request(
