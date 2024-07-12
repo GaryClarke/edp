@@ -6,6 +6,7 @@ namespace App\Controller;
 
 use App\DTO\Webhook;
 use App\Error\ErrorHandler;
+use App\Error\ErrorHandlerInterface;
 use App\Webhook\Handler\HandlerDelegator;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -19,7 +20,7 @@ class WebhooksController extends AbstractController
     public function __construct(
         private SerializerInterface $serializer,
         private HandlerDelegator $handlerDelegator,
-        private ErrorHandler $errorHandler
+        private ErrorHandlerInterface $errorHandler
     ) {
     }
 

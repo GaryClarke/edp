@@ -5,8 +5,11 @@ declare(strict_types=1);
 namespace App\Tests\Controller;
 
 use App\CDP\Analytics\Model\Subscription\Identify\IdentifyModel;
-use App\CDP\Http\CdpClient;
+use App\CDP\Http\CdpClientInterface;
+use App\Error\ErrorHandlerInterface;
+use App\Error\Exception\WebhookException;
 use App\Tests\TestDoubles\CDP\Http\FakeCdpClient;
+use App\Tests\TestDoubles\Error\FakeErrorHandler;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -17,12 +20,14 @@ class WebhooksControllerTest extends WebTestCase
     private KernelBrowser $webTester;
     private ContainerInterface $container;
     private FakeCdpClient $cdpClient;
+    private FakeErrorHandler $errorHandler;
 
     protected function setUp(): void
     {
         $this->webTester = static::createClient();
         $this->container = $this->webTester->getContainer();
-        $this->cdpClient = $this->container->get(CdpClient::class);
+        $this->cdpClient = $this->container->get(CdpClientInterface::class);
+        $this->errorHandler = $this->container->get(ErrorHandlerInterface::class);
     }
 
     public function testWebhooksAreHandled(): void
@@ -85,22 +90,33 @@ class WebhooksControllerTest extends WebTestCase
         $this->assertEquals(Response::HTTP_NO_CONTENT, $this->webTester->getResponse()->getStatusCode());
     }
 
-    public function testWebhookExceptionThrownIfWebhookCanNotBeHandled(): void
+    public function testExecutionIsStoppedIfMandatoryInfoCanNotBeMapped(): void
     {
-        $this->markTestIncomplete('wip');
-    }
+        /** @phpcs:disable */
+        $webhook = '{"event":"newsletter_subscribed","origin":"www","timestamp":"2024-12-12T12:00:00Z","user": {"client_id":"some-user-guid","email":"user@example.com","region":"EU"},"newsletter": {"newsletter_id":"newsletter-001","topic":"N/A","product_id":"some-product-identifier"}}';
+        /** @phpcs:enable */
 
-    public function testWebhookExceptionThrownIfDeserializeFails(): void
-    {
-        $this->markTestIncomplete('wip');
-    }
+        $this->postJson($webhook);
 
-    public function testWebhookExceptionThrownIfIdentifyModelMappingFails(): void
-    {
-        $this->markTestIncomplete('wip');
+        $webhookException = $this->errorHandler->getError();
+        assert($webhookException instanceof WebhookException);
+
+        $this->assertSame(1, $this->errorHandler->getHandleCallCount());
+
+        $this->assertStringContainsString(
+            'Could not map App\DTO\Newsletter\NewsletterWebhook to IdentifyModel',
+            $webhookException->getMessage()
+        );
+
+        $this->assertEquals(Response::HTTP_BAD_REQUEST, $this->webTester->getResponse()->getStatusCode());
     }
 
     public function testWebhookExceptionThrownIfIdentifyModelValidationFails(): void
+    {
+        $this->markTestIncomplete('wip');
+    }
+
+    public function testWebhookExceptionThrownIfDispatchFails(): void
     {
         $this->markTestIncomplete('wip');
     }

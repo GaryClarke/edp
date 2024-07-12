@@ -7,14 +7,14 @@ namespace App\Forwarder\Newsletter\Track;
 use App\CDP\Analytics\Model\ModelValidator;
 use App\CDP\Analytics\Model\Subscription\Track\SubscriptionMapper;
 use App\CDP\Analytics\Model\Subscription\Track\TrackModel;
-use App\CDP\Http\CdpClient;
+use App\CDP\Http\CdpClientInterface;
 use App\DTO\Newsletter\NewsletterWebhook;
 use App\Forwarder\Newsletter\ForwarderInterface;
 
 class SubscriptionForwarder implements ForwarderInterface
 {
     public function __construct(
-        private CdpClient $cdpClient,
+        private CdpClientInterface $cdpClient,
         private ModelValidator $modelValidator
     ) {
     }
