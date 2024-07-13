@@ -5,8 +5,10 @@ declare(strict_types=1);
 namespace App\CDP\Http;
 
 use App\CDP\Analytics\Model\ModelInterface;
+use App\Error\Exception\WebhookException;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
+use Throwable;
 
 class CdpClient
 {
@@ -20,7 +22,7 @@ class CdpClient
 
     public function track(ModelInterface $model): void
     {
-        $this->httpClient->request(
+        $response = $this->httpClient->request(
             'POST',
             self::CDP_API_URL . '/track',
             [
@@ -33,11 +35,19 @@ class CdpClient
         );
 
         // Add error handling
+        try {
+            $response->toArray();
+        } catch (Throwable $throwable) {
+            throw new WebhookException(
+                message: $response->getContent(false),
+                previous: $throwable
+            );
+        }
     }
 
     public function identify(ModelInterface $model): void
     {
-        $this->httpClient->request(
+        $response = $this->httpClient->request(
             'POST',
             self::CDP_API_URL . '/identify',
             [
@@ -50,5 +60,13 @@ class CdpClient
         );
 
         // Add error handling
+        try {
+            $response->toArray();
+        } catch (Throwable $throwable) {
+            throw new WebhookException(
+                message: $response->getContent(false),
+                previous: $throwable
+            );
+        }
     }
 }
