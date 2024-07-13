@@ -94,7 +94,7 @@ class WebhooksControllerTest extends WebTestCase
     {
         /** @phpcs:disable */
         $webhook = '{"event":"newsletter_subscribed","origin":"www","timestamp":"2024-12-12T12:00:00Z","user": {"client_id":"some-user-guid","email":"user@example.com","region":"EU"},"newsletter": {"newsletter_id":"newsletter-001","topic":"N/A","product_id":"some-product-identifier"}}';
-        /** @phpcs:enable */
+        /** @phpcs:enable */// should not map with id missing
 
         $this->postJson($webhook);
 
@@ -113,7 +113,23 @@ class WebhooksControllerTest extends WebTestCase
 
     public function testWebhookExceptionThrownIfIdentifyModelValidationFails(): void
     {
-        $this->markTestIncomplete('wip');
+        /** @phpcs:disable */
+        $webhook = '{"event":"newsletter_subscribed","id":"","origin":"www","timestamp":"2024-12-12T12:00:00Z","user": {"client_id":"some-user-guid","email":"user@example.com","region":"EU"},"newsletter": {"newsletter_id":"newsletter-001","topic":"N/A","product_id":"some-product-identifier"}}';
+        /** @phpcs:enable */
+
+        $this->postJson($webhook);
+
+        $webhookException = $this->errorHandler->getError();
+        assert($webhookException instanceof WebhookException);
+
+        $this->assertSame(1, $this->errorHandler->getHandleCallCount());
+
+        $this->assertStringContainsString(
+            'Invalid IdentifyModel properties: subscriptionId',
+            $webhookException->getMessage()
+        );
+
+        $this->assertEquals(Response::HTTP_BAD_REQUEST, $this->webTester->getResponse()->getStatusCode());
     }
 
     public function testWebhookExceptionThrownIfDispatchFails(): void
