@@ -34,6 +34,10 @@ services:
     App\CDP\Http\CdpClientInterface: '@App\CDP\Http\CdpClient'
     App\Error\ErrorHandlerInterface: '@App\Error\ErrorHandler'
 
+when@dev:
+    services:
+        App\Error\ErrorHandlerInterface: '@App\Error\DebugErrorHandler'
+
 when@test:
     services:
         App\Tests\TestDoubles\CDP\Http\FakeCdpClient: ~

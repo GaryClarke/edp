@@ -6,10 +6,11 @@ namespace App\Error;
 
 use Throwable;
 
-class ErrorHandler implements ErrorHandlerInterface
+class DebugErrorHandler implements ErrorHandlerInterface
 {
     public function handle(Throwable $error): void
     {
-        // Log to centralized logging platform e.g. DataDog
+        dump('DebugErrorHandler');
+        throw $error;
     }
 }
